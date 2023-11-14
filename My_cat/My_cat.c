@@ -9,8 +9,14 @@ int main(int argc, char *argv[]) {
 }
 
 int parse_opts(int argc, char *argv[], my_cat_opt *flags) {
+  const struct option long_options[] = {
+      {"number", no_argument, NULL, 'n'},
+      {"squeeze-blank", no_argument, NULL, 's'},
+      {"number-nonblank", no_argument, NULL, 'b'},
+      {0, 0, 0, 0}};
   char back_char;
-  while ((back_char = getopt_long(argc, argv, "+enstvb", NULL, NULL)) != -1) {
+  while ((back_char = getopt_long(argc, argv, "+enstvb", long_options, NULL)) !=
+         -1) {
     switch (back_char) {
       case 'e':
         flags->e = 1;
@@ -77,6 +83,7 @@ void output_file(int argc, char *argv[], my_cat_opt flags) {
         }
         if (simbol == '\n') print_numb = 1;
       }
+      fclose(file_name);
     }
   }
 }
