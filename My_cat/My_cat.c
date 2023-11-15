@@ -36,7 +36,7 @@ int parse_opts(int argc, char *argv[], my_cat_opt *flags) {
         flags->b = 1;
         break;
       default:
-        printf("Unknown option: %c\n", back_char);
+        fprintf(stderr, "cat: invalid option -- %c\n", back_char);
         return 1;
     }
   }
@@ -47,7 +47,7 @@ void output_file(int argc, char *argv[], my_cat_opt flags) {
   FILE *file_name;
   for (int i = optind; i < argc; ++i) {
     if ((file_name = fopen(argv[i], "r")) == NULL) {
-      printf("cat: %s: No such file or directory\n", argv[i]);
+      fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);
     } else {
       char simbol;
       int count_str = 1;
