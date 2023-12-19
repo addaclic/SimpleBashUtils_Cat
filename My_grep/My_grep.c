@@ -3,7 +3,7 @@
 int main(int argc, char *argv[]) {
   my_grep_opt opt = {0};
   if (argc == 1) {
-    fprintf(stderr, "grep: missing operand\n");
+    fprintf(stderr, NO_PARAMS_MASSAGE);
   } else {
     if (!(parse_opts(argc, argv, &opt))) {
       output_file(argc, argv, opt);
@@ -84,18 +84,21 @@ void f_pattern(char *optarg, my_grep_opt *opt) {
 }
 
 void output_file(int argc, char *argv[], my_grep_opt opt) {
-  if (!opt.pattern_count) strcat(opt.pattern_str, argv[optind++]);
-  regex_t pattern_struct = {0};
-  regmatch_t match = {0};
-  int reg_param = REG_EXTENDED;
-  if (opt.i) reg_param = REG_EXTENDED | REG_ICASE;
-  regcomp(&pattern_struct, opt.pattern_str, reg_param);
-  FILE *file_name;
+  if (!opt.pattern_count) {
+    strcat(opt.pattern_str, argv[optind++]);
+    ++(opt.pattern_count);
+  }
   for (int i = optind; i < argc; ++i) {
+    FILE *file_name;
     if ((file_name = fopen(argv[i], "r")) == NULL) {
       if (!opt.s)
         fprintf(stderr, "grep: %s: No such file or directory\n", argv[i]);
     } else {
+      regex_t pattern_struct = {0};
+      regmatch_t match = {0};
+      int reg_param = REG_EXTENDED;
+      if (opt.i) reg_param = REG_EXTENDED | REG_ICASE;
+      regcomp(&pattern_struct, opt.pattern_str, reg_param);
       char file_str[BUFF_SIZE];
       int str_num = 1;
       int count_match = 0;
@@ -114,14 +117,14 @@ void output_file(int argc, char *argv[], my_grep_opt opt) {
         }
         ++str_num;
       }
-      if (opt.c) {
+      if LC_CASE {
         if (!opt.h && argc - optind > 1) printf("%s:", argv[i]);
         printf("%d\n", count_match);
       }
       if (opt.l && count_match) printf("%s\n", argv[i]);
 
       fclose(file_name);
+      regfree(&pattern_struct);
     }
   }
-  regfree(&pattern_struct);
 }

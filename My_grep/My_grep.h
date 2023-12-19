@@ -1,6 +1,24 @@
 #ifndef MY_GREP_H
 #define MY_GREP_H
 
+#ifdef __linux__
+#define LC_CASE (options.c && !options.l)
+#else
+#define LC_CASE (opt.c)
+#endif
+
+#ifdef __linux__
+#define NO_PARAMS_MASSAGE                                                   \
+  "Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more " \
+  "information.\n"
+#else
+#define NO_PARAMS_MASSAGE                                             \
+  "usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] "    \
+  "[-C[num]]\n        [-e pattern] [-f file] [--binary-files=value] " \
+  "[--color=when]\n        [--context[=num]] [--directories=action] " \
+  "[--label] [--line-buffered]\n        [--null] [pattern] [file ...]\n"
+#endif
+
 #define BUFF_SIZE 4092
 
 #include <getopt.h>

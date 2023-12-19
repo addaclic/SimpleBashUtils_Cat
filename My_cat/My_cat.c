@@ -14,10 +14,10 @@ int parse_opts(int argc, char *argv[], my_cat_opt *flags) {
       {"squeeze-blank", no_argument, NULL, 's'},
       {"number-nonblank", no_argument, NULL, 'b'},
       {0, 0, 0, 0}};
-  char back_char;
-  while ((back_char = getopt_long(argc, argv, "+enstvb", long_options, NULL)) !=
-         -1) {
-    switch (back_char) {
+  char ret_char;
+  while ((ret_char = getopt_long(argc, argv, LETTERS_CASE, long_options,
+                                 NULL)) != -1) {
+    switch (ret_char) {
       case 'e':
         flags->e = 1;
         flags->v = 1;
@@ -36,7 +36,7 @@ int parse_opts(int argc, char *argv[], my_cat_opt *flags) {
         flags->b = 1;
         break;
       default:
-        fprintf(stderr, "cat: invalid option -- %c\n", back_char);
+        fprintf(stderr, "cat: invalid option -- %c\n", ret_char);
         return 1;
     }
   }
@@ -49,41 +49,45 @@ void output_file(int argc, char *argv[], my_cat_opt flags) {
     if ((file_name = fopen(argv[i], "r")) == NULL) {
       fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);
     } else {
-      char simbol;
-      int count_str = 1;
-      char print_numb = 1;
-      int count_slash_n = 1;
-      while ((simbol = fgetc(file_name)) != EOF) {
-        if (flags.s && simbol == '\n')
-          ++count_slash_n;
-        else
-          count_slash_n = 0;
-        if ((flags.n && print_numb && !flags.b && count_slash_n < 3) ||
-            (flags.b && simbol != '\n' && print_numb)) {
-          printf("%6d\t", count_str);
-          ++count_str;
-          print_numb = 0;
-        }
-        if (flags.t && simbol == '\t') {
-          putchar('^');
-          simbol = 'I';
-        }
-        if (flags.v &&
-            ((simbol >= 0 && simbol <= 8) || (simbol >= 11 && simbol <= 31))) {
-          putchar('^');
-          simbol += 64;
-        }
-        if (flags.v && simbol == 127) {
-          putchar('^');
-          simbol -= 64;
-        }
-        if (count_slash_n < 3) {
-          if (flags.e && simbol == '\n') putchar('$');
-          putchar(simbol);
-        }
-        if (simbol == '\n') print_numb = 1;
-      }
-      fclose(file_name);
+      print_text(file_name, flags);
     }
   }
+}
+
+void print_text(FILE *file_name, my_cat_opt flags) {
+  char simbol;
+  int count_str = 1;
+  char print_numb = 1;
+  int count_slash_n = 1;
+  while ((simbol = fgetc(file_name)) != EOF) {
+    if (flags.s && simbol == '\n')
+      ++count_slash_n;
+    else
+      count_slash_n = 0;
+    if ((flags.n && print_numb && !flags.b && count_slash_n < 3) ||
+        (flags.b && simbol != '\n' && print_numb)) {
+      printf("%6d\t", count_str);
+      ++count_str;
+      print_numb = 0;
+    }
+    if (flags.t && simbol == '\t') {
+      putchar('^');
+      simbol = 'I';
+    }
+    if (flags.v &&
+        ((simbol >= 0 && simbol <= 8) || (simbol >= 11 && simbol <= 31))) {
+      putchar('^');
+      simbol += 64;
+    }
+    if (flags.v && simbol == 127) {
+      putchar('^');
+      simbol -= 64;
+    }
+    if (count_slash_n < 3) {
+      if (flags.e && simbol == '\n') putchar('$');
+      putchar(simbol);
+    }
+    if (simbol == '\n') print_numb = 1;
+  }
+  fclose(file_name);
 }
