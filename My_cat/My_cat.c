@@ -50,6 +50,7 @@ void output_file(int argc, char *argv[], my_cat_opt flags) {
       fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);
     } else {
       print_text(file_name, flags);
+      fclose(file_name);
     }
   }
 }
@@ -89,5 +90,4 @@ void print_text(FILE *file_name, my_cat_opt flags) {
     }
     if (simbol == '\n') print_numb = 1;
   }
-  fclose(file_name);
 }

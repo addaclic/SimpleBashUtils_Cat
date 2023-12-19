@@ -123,8 +123,8 @@ void output_file(int argc, char *argv[], my_grep_opt opt) {
       }
       if (opt.l && count_match) printf("%s\n", argv[i]);
 
-      fclose(file_name);
       regfree(&pattern_struct);
+      fclose(file_name);
     }
   }
 }
