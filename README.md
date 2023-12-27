@@ -1,6 +1,6 @@
 ## Hello everyone!
 
-This page contains the project from which I started learning programming.
+This page contains the project from which I started learning programming. It is still supported by Me, since the code is constantly being rewritten. Based on it, I apply new knowledge acquired during the learning process.
 
 This project considering two main bash utilities: \
 **cat** and **grep**.
