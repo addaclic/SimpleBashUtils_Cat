@@ -45,5 +45,6 @@ int parse_opts(int, char *[], my_grep_opt *);
 void e_pattern(char *, my_grep_opt *);
 void f_pattern(char *, my_grep_opt *);
 void output_file(int, char *[], my_grep_opt);
+void grep_magic(FILE *, int, char *, my_grep_opt);
 
 #endif  // MY_GREP_H
