@@ -35,6 +35,9 @@ int parse_opts(int argc, char *argv[], my_cat_opt *flags) {
       case 'b':
         flags->b = 1;
         break;
+      case 'v':
+        flags->v = 1;
+        break;
       default:
         fprintf(stderr, "cat: invalid option -- %c\n", ret_char);
         return 1;

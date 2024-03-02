@@ -13,4 +13,8 @@ clean:
 style:
 	clang-format -style=google -n *.c
 
-test:
+test: $(PROJECT_NAME)
+	@cp $(PROJECT_NAME) tests/
+	@cp $(PROJECT_NAME).* tests/
+	@cp Makefile tests/
+	@cd tests && bash test_func_cat.sh
