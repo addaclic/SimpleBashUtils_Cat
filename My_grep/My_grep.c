@@ -110,9 +110,9 @@ void grep_magic(FILE *file_name, int argc, char *name_of_file,
   int str_num = 1;
   int count_match = 0;
   while (fgets(file_str, BUFF_SIZE, file_name) != NULL) {
-    int res_of_match = regexec(&pattern_struct, file_str, 1, &match, 0);
     if (file_str[strlen(file_str) - 1] == '\n')
       file_str[strlen(file_str) - 1] = '\0';
+    int res_of_match = regexec(&pattern_struct, file_str, 1, &match, 0);
     if (opt.v) res_of_match = !res_of_match;
     if (!res_of_match) {
       ++count_match;

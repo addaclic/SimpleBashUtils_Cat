@@ -9,32 +9,31 @@ declare -a tests=(
 "s test_0_grep.txt VAR"
 "for My_grep.c My_grep.h Makefile VAR"
 "for My_grep.c VAR"
-"-e for -e ^int My_grep.c My_grep.h Makefile VAR"
-"-e for -e ^int My_grep.c VAR"
-"-e regex -e ^print My_grep.c VAR -f test_ptrn_grep.txt"
-"-e while -e void My_grep.c Makefile VAR -f test_ptrn_grep.txt"
+"My_grep.c -e for -e ^int My_grep.h Makefile VAR"
+"My_grep.c  -e for -e ^int VAR"
+"My_grep.c -e regex -e ^print VAR -f test_ptrn_grep.txt"
+"Makefile -e while -e void My_grep.c VAR -f test_ptrn_grep.txt"
 )
 
 declare -a extra=(
-"-n for test_1_grep.txt test_2_grep.txt"
-"-n for test_1_grep.txt"
-"-n -e ^\} test_1_grep.txt"
+"for test_1_grep.txt test_2_grep.txt -n"
+"for test_1_grep.txt -n"
+"test_1_grep.txt -n -e ^\}"
 "-ce ^int test_1_grep.txt test_2_grep.txt"
-"-e ^int test_1_grep.txt"
+"test_1_grep.txt -e ^int"
 "-nivh = test_1_grep.txt test_2_grep.txt"
-"-e"
 "-ie INT test_5_grep.txt"
 "-echar test_1_grep.txt test_2_grep.txt"
-"-ne = -e out test_5_grep.txt"
+"test_5_grep.txt -ne = -e out"
 "-iv int test_5_grep.txt"
 "-in int test_5_grep.txt"
 "-c -l aboba test_1_grep.txt test_5_grep.txt"
 "-v test_1_grep.txt -e ank"
 "-l for test_1_grep.txt test_2_grep.txt"
-"-o -e int test_4_grep.txt"
-"-e = -e out test_5_grep.txt"
-"-e ing -e as -e the -e not -e is test_6_grep.txt"
-# "-c -e . test_1_grep.txt -e '.'"
+# "-o -e int test_4_grep.txt"
+"test_5_grep.txt -e = -e out"
+"test_6_grep.txt -e ing -e as -e the -e not -e is"
+"-c -e . test_1_grep.txt -e '.'"
 "-l for no_file.txt test_2_grep.txt"
 )
 
@@ -146,6 +145,7 @@ done
 echo -e "\033[31mFAIL: $FAIL\033[0m"
 echo -e "\033[32mSUCCESS: $SUCCESS\033[0m"
 echo "ALL: $COUNTER"
+rm Makefile My_grep.c My_grep.h My_grep
 
 if [ $FAIL -eq 0 ]
 then

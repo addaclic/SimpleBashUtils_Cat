@@ -2,7 +2,7 @@
 #define MY_GREP_H
 
 #ifdef __linux__
-#define LC_CASE (options.c && !options.l)
+#define LC_CASE (opt.c && !opt.l)
 #else
 #define LC_CASE (opt.c)
 #endif

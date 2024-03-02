@@ -8,10 +8,13 @@ $(PROJECT_NAME): $(PROJECT_NAME).c
 	$(CC) $(FLAGS) $(PROJECT_NAME).c -o $(PROJECT_NAME)
 
 clean:
-	rm -f $(PROJECT_NAME) *.log
+	rm -f $(PROJECT_NAME)
 
 style:
 	clang-format -style=google -n *.c
 
 test: $(PROJECT_NAME)
-	bash test_func_grep.sh
+	@cp My_grep tests
+	@cp My_grep.* tests
+	@cp Makefile tests
+	@cd tests && bash test_func_grep.sh
