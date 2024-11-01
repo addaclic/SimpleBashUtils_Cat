@@ -1,6 +1,6 @@
-PROJECT_NAME = My_cat
-CC = gcc
-FLAGS = -Wall -Wextra -Werror -std=c11
+PROJECT_NAME := My_cat
+CC := gcc
+FLAGS := -Wall -Wextra -Werror -std=c11
 
 .PHONY: all clean style $(PROJECT_NAME)
 
