@@ -79,7 +79,7 @@ void print_text(FILE *file_name, my_cat_opt flags) {
       simbol = 'I';
     }
     if (flags.v &&
-        ((simbol >= 0 && simbol <= 8) || (simbol >= 11 && simbol <= 31))) {
+        ((simbol >= 0 && simbol < 9) || (simbol > 10 && simbol < 32))) {
       putchar('^');
       simbol += 64;
     }

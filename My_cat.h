@@ -3,7 +3,7 @@
  *           of one or more files.
  *
  * \author Andrey addaclic
- * \copyright GNU Public License
+ * \copyright MIT License
  */
 
 #ifndef MY_CAT_H
